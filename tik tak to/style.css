@@ -1,0 +1,628 @@
+/* style.css - Complete Animation & Design for Animated Tic-Tac-Toe */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0f1c 0%, #0e1a2b 50%, #1a2a3a 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', 'Poppins', 'Orbitron', system-ui, -apple-system, 'BlinkMacSystemFont', monospace;
+    padding: 20px;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated background floating particles */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 40%, rgba(100, 200, 255, 0.08) 2px, transparent 2px),
+        radial-gradient(circle at 80% 70%, rgba(255, 100, 200, 0.06) 1px, transparent 1px);
+    background-size: 50px 50px, 30px 30px;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatParticles 60s linear infinite;
+}
+
+@keyframes floatParticles {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 100px 100px, -50px 50px; }
+}
+
+/* Game Container - Glassmorphic with glow */
+.game {
+    position: relative;
+    z-index: 2;
+    background: rgba(18, 25, 35, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 64px;
+    padding: 30px 32px 40px 32px;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(80, 180, 255, 0.4);
+    transition: all 0.3s ease;
+    animation: floatIn 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Game Title with neon pulse animation */
+.game h2 {
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #d4ffb0, #7dd3fc, #c084fc, #f0a3ff);
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    animation: titleGradient 3s ease infinite, titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 5px rgba(125, 211, 252, 0.3); }
+    50% { text-shadow: 0 0 20px rgba(125, 211, 252, 0.6), 0 0 5px rgba(192, 132, 252, 0.8); }
+}
+
+/* Game status display */
+#display {
+    background: linear-gradient(135deg, #0a0f18, #111a24);
+    border-radius: 60px;
+    padding: 14px 20px;
+    margin: 8px auto 20px auto;
+    width: 90%;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 2px;
+    color: #b9fbc0;
+    text-shadow: 0 0 8px #00ffaa80;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.5), 0 4px 15px rgba(0, 255, 170, 0.2);
+    border: 1px solid rgba(100, 255, 180, 0.4);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+/* Score Panel */
+.score-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin: 15px auto 25px auto;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 80px;
+    width: 95%;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    animation: panelGlow 3s ease-in-out infinite;
+}
+
+@keyframes panelGlow {
+    0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.4); }
+}
+
+.score-card {
+    text-align: center;
+    flex: 1;
+    padding: 5px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.score-card:hover {
+    transform: translateY(-3px);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.score-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 5px;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.score-label {
+    font-size: 0.7rem;
+    color: #bfd9ff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.score-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd89b, #c7e9fb);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    min-width: 50px;
+    font-family: 'Orbitron', monospace;
+    transition: all 0.2s ease;
+}
+
+.score-divider {
+    font-size: 2rem;
+    color: rgba(255, 215, 0, 0.5);
+    font-weight: 100;
+    animation: dividerPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dividerPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* keys grid - 3x3 professional layout */
+#keys {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    justify-items: center;
+    align-items: center;
+    margin: 15px 0 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 55px;
+}
+
+/* Individual Cell Styling - Vibrant & Interactive */
+.cell {
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle at 35% 35%, #2a3a45, #1a2a35);
+    border-radius: 28px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 220, 0.3);
+    border: 1px solid rgba(100, 180, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    
+    /* Flexbox centering for X and O symbols */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Font styling for X/O */
+    font-size: 3.2rem;
+    font-weight: 800;
+    font-family: 'Segoe UI', 'Poppins', 'Orbitron', monospace;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+/* Cell hover effect */
+.cell:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 18px 28px -8px black;
+    border-color: rgba(100, 200, 255, 0.8);
+    background: radial-gradient(circle at 35% 35%, #3a4a55, #2a3a45);
+}
+
+/* Cell active press effect */
+.cell:active {
+    transform: scale(0.95);
+    transition: 0.02s;
+}
+
+/* Active flash animation when clicked */
+.cell-active {
+    animation: cellFlash 0.15s ease-out forwards;
+}
+
+@keyframes cellFlash {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 200, 0.7);
+    }
+    50% {
+        transform: scale(0.92);
+        filter: brightness(1.5);
+        box-shadow: 0 0 0 8px rgba(255, 255, 200, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 200, 0);
+    }
+}
+
+/* Win celebration animation for cells */
+@keyframes winCelebration {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 gold;
+    }
+    25% {
+        transform: scale(1.08);
+        box-shadow: 0 0 0 10px rgba(255, 215, 0, 0.5);
+        filter: brightness(1.2);
+    }
+    50% {
+        transform: scale(0.98);
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0.2);
+    }
+    75% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 215, 0, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 gold;
+    }
+}
+
+.win-celebration {
+    animation: winCelebration 0.6s ease-out forwards;
+}
+
+/* Global victory burst */
+@keyframes victoryBurst {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+        border-color: rgba(80, 180, 255, 0.35);
+    }
+    25% {
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0.3), 0 0 30px 5px gold;
+        border-color: #ffdd88;
+    }
+    50% {
+        box-shadow: 0 0 0 40px rgba(255, 215, 0, 0.1), 0 0 50px 15px #ffcc44;
+        border-color: #ffcc66;
+    }
+    75% {
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0.2);
+        border-color: #ffdd88;
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+        border-color: rgba(80, 180, 255, 0.35);
+    }
+}
+
+.victory-global {
+    animation: victoryBurst 0.8s ease-out forwards;
+}
+
+/* Score update animation */
+@keyframes scorePulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.3);
+        text-shadow: 0 0 15px gold;
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+.highscore-glow {
+    animation: scorePulse 0.4s ease-out;
+    display: inline-block;
+}
+
+/* ========== ANIMATED RESTART BUTTONS ========== */
+#restart, #restartpoint {
+    background: linear-gradient(135deg, #2a3f54, #1a2a38);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 60px;
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: 'Segoe UI', 'Poppins', monospace;
+    letter-spacing: 1.5px;
+    color: #f0f3f8;
+    cursor: pointer;
+    margin: 10px 8px;
+    width: auto;
+    min-width: 160px;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 0 #0f141c, 0 5px 20px rgba(0, 255, 200, 0.2);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(100, 200, 255, 0.5);
+}
+
+/* Different color for restartpoint button */
+#restartpoint {
+    background: linear-gradient(135deg, #3a2f4e, #2a1a38);
+    border-color: rgba(200, 100, 255, 0.5);
+    box-shadow: 0 8px 0 #0f141c, 0 5px 20px rgba(200, 100, 255, 0.2);
+}
+
+#restartpoint:hover {
+    background: linear-gradient(135deg, #4a3f6e, #3a2a58);
+    border-color: rgba(200, 100, 255, 0.8);
+}
+
+/* Shine effect for both buttons */
+#restart::before, #restartpoint::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+#restart:hover::before, #restartpoint:hover::before {
+    left: 100%;
+}
+
+/* Hover effect - lift and glow */
+#restart:hover, #restartpoint:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 11px 0 #0f141c, 0 8px 25px rgba(0, 255, 200, 0.4);
+    background: linear-gradient(135deg, #3a5570, #2a3a48);
+    color: #ffffff;
+}
+
+#restartpoint:hover {
+    box-shadow: 0 11px 0 #0f141c, 0 8px 25px rgba(200, 100, 255, 0.4);
+}
+
+/* Active/press effect */
+#restart:active, #restartpoint:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #0f141c;
+    transition: 0.03s linear;
+}
+
+/* Icon spin on hover */
+#restart:hover::after {
+    content: ' 🔄';
+    animation: spinIcon 0.4s ease;
+}
+
+#restartpoint:hover::after {
+    content: ' 🔄';
+    animation: spinIcon 0.4s ease;
+}
+
+#restart::after, #restartpoint::after {
+    content: ' 🔄';
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+@keyframes spinIcon {
+    0% { transform: rotate(0deg); display: inline-block; }
+    100% { transform: rotate(180deg); }
+}
+
+/* Pulse animation for restart buttons */
+@keyframes btnPulse {
+    0% {
+        box-shadow: 0 8px 0 #0f141c, 0 0 0 0 rgba(0, 255, 200, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 0 #0f141c, 0 0 0 8px rgba(0, 255, 200, 0.2);
+    }
+    100% {
+        box-shadow: 0 8px 0 #0f141c, 0 0 0 0 rgba(0, 255, 200, 0);
+    }
+}
+
+#restart {
+    animation: btnPulse 2s infinite ease-in-out;
+}
+
+#restartpoint {
+    animation: btnPulse 2s infinite ease-in-out 0.5s;
+}
+
+#restart:hover, #restartpoint:hover {
+    animation: none;
+}
+
+/* Click ripple effect */
+@keyframes clickRipple {
+    0% {
+        transform: scale(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+#restart:active::before, #restartpoint:active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    background: rgba(255, 255, 200, 0.9);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: clickRipple 0.4s ease-out;
+    pointer-events: none;
+}
+
+/* Game hint styling */
+.game-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #8aaac0;
+    margin-top: 20px;
+    padding: 8px;
+    border-radius: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Responsive design */
+@media (max-width: 550px) {
+    .game {
+        padding: 20px 20px 30px 20px;
+        border-radius: 48px;
+    }
+    
+    .cell {
+        width: 75px;
+        height: 75px;
+        border-radius: 22px;
+        font-size: 2.5rem;
+    }
+    
+    #keys {
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .game h2 {
+        font-size: 1.5rem;
+    }
+    
+    #display {
+        font-size: 1rem;
+        padding: 10px 16px;
+    }
+    
+    .score-value {
+        font-size: 1.6rem;
+    }
+    
+    .score-icon {
+        font-size: 1.2rem;
+    }
+    
+    #restart, #restartpoint {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+        min-width: 130px;
+    }
+}
+
+@media (max-width: 420px) {
+    .cell {
+        width: 65px;
+        height: 65px;
+        border-radius: 18px;
+        font-size: 2rem;
+    }
+    
+    #keys {
+        gap: 8px;
+    }
+    
+    .game h2 {
+        font-size: 1.2rem;
+    }
+    
+    .score-panel {
+        gap: 8px;
+        padding: 8px 12px;
+    }
+}
+
+/* Shake animation for wrong move */
+@keyframes shakeGame {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+.shake-game {
+    animation: shakeGame 0.4s ease-in-out;
+}
+
+/* Draw animation */
+@keyframes drawFlash {
+    0%, 100% { border-color: rgba(150, 150, 200, 0.4); }
+    50% { border-color: rgba(150, 150, 200, 0.9); box-shadow: 0 0 20px rgba(150, 150, 200, 0.5); }
+}
+
+.draw-effect {
+    animation: drawFlash 0.6s ease-out;
+}
+
+/* Focus ring for accessibility */
+.cell:focus-visible {
+    outline: 3px solid #ffd966;
+    transform: scale(1.02);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0e1a2b;
+}
+::-webkit-scrollbar-thumb {
+    background: #3c6e8f;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #5a8aaf;
+}
